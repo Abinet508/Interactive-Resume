@@ -1,1 +1,0 @@
-web: gunicorn interactive_resume.interactive_resume.wsgi --log-file -

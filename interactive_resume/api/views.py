@@ -9,6 +9,17 @@ import json
 User = get_user_model()
 
 
+
+@api_view(['GET',])
+def home(request):
+    route = {
+        "Register": "/api/register",
+        "Login": "api/login"
+    }
+
+    return Response(route)
+
+
 @api_view(['POST',])
 def register_user(request):
     serilizer = RegisterSerializer(data=request.data)

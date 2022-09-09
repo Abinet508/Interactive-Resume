@@ -82,7 +82,7 @@ def add_education(request):
     user_id = request.session['user_id']
     user = User.objects.get(id=user_id)
     print(user)
-    serializer = EducationSerializer(data=request.data)
+    serializer = EducationSerializer(data=request.data, many=True)
     if serializer.is_valid():
         # serializer.objects.user = user
         serializer.save(user=user)
@@ -95,7 +95,7 @@ def add_exprience(request):
     user_id = request.session['user_id']
     user = User.objects.get(id=user_id)
     print(user)
-    serializer = ExprienceSerializer(data=request.data)
+    serializer = ExprienceSerializer(data=request.data, many=True)
     if serializer.is_valid():
         # serializer.objects.user = user
         serializer.save(user=user)

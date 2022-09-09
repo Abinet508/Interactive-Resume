@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.hashers import check_password
 import json
-from .models import Resume
+from .models import Resume, Exprience, Education
 
 User = get_user_model()
 
@@ -103,8 +103,15 @@ def add_exprience(request):
     return Response(serializer.data)
 
 
-# @api_view(['POST'])
-# def add_resume(request):
+@api_view(['POST'])
+def add_resume(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    exprience = Exprience.objects.filter(user=user)
+    education = Education.objects.filter(user=user)
+    serializer = ResumeSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(exprience=exprience, education=education)
 
 
 

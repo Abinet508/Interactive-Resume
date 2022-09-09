@@ -49,10 +49,32 @@ class EducationSerializer(serializers.ModelSerializer):
       fields = ['college', 'date_started', 'date_ended']
 
 
+# class ChoiceField(serializers.ChoiceField):
+
+#     def to_representation(self, obj):
+#         if obj == '' and self.allow_blank:
+#             return obj
+#         return self._choices[obj]
+
+#     def to_internal_value(self, data):
+#         # To support inserts with the value
+#         if data == '' and self.allow_blank:
+#             return ''
+
+#         for key, val in self._choices.items():
+#             if val == data:
+#                 return key
+#         self.fail('invalid_choice', input=data)
+
 class ResumeSerializer(serializers.ModelSerializer):
+    gender = serializers.CharField(source='get_gender_display')
+    language = serializers.CharField(source='get_language_display')
+    profile_pic = serializers.ImageField()
+    # gender = ChoiceField(choices=.Resume.gender_choices)
+    # language = ChoiceField(choices=.Resume.language_choices)
     class Meta:
       model = Resume
-      fields = ['full_name', 'profile_pic', 'resident', 'skills', 'job_des', 'language', 'expirience', 'education', 'gender']
+      fields = ['full_name', 'profile_pic', 'resident', 'skills', 'job_des', 'language', 'gender']
 
   
 

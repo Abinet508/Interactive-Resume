@@ -23,16 +23,13 @@ class Education(models.Model):
         return f'{self.user.username}-education'
 
 
-
-language_choice = (("English", "English"),
-                    ("Amharic", "Amharic")
-)
-
-gender_choice = (("male", "male"),
-                 ("Female", "Female"),
-                 ("other", "other")
-)
 class Resume(models.Model):
+    language_choice = (("English", "English"),
+                       ("Amharic", "Amharic"))
+
+    gender_choice = (("male", "male"),
+                     ("Female", "Female"),
+                    ("other", "other"))
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_pic = models.ImageField()
     full_name = models.CharField(max_length=100, blank=True)

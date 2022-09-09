@@ -9,6 +9,6 @@ def create_resume(sender, instance, created, **kwargs):
     if created:
         Resume.objects.create(user=instance)
 
-# @receiver(post_save, sender=User)
-# def save_resume(sender, instance, **kwargs):
-#     instance.resume.save()
+@receiver(post_save, sender=User)
+def save_resume(sender, instance, **kwargs):
+    instance.resume.save()

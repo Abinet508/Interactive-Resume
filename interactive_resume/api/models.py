@@ -30,7 +30,7 @@ class Resume(models.Model):
     gender_choice = (("male", "male"),
                      ("Female", "Female"),
                     ("other", "other"))
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='resume')
     profile_pic = models.ImageField()
     full_name = models.CharField(max_length=100, blank=True)
     resident = models.CharField(max_length=200, blank=True)

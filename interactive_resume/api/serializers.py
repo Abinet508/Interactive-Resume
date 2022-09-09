@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from .models import Resume, Exprience, Education
 
 
 #Serializer to Get User Details using Django Token Authentication
@@ -34,6 +35,24 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+
+
+class ExprienceSerializer(serializers.ModelSerializer):
+    class Meta:
+      model = Exprience
+      fields = ['job', 'date_started', 'date_ended']
+
+class EducationSerializer(serializers.ModelSerializer):
+    class Meta:
+      model = Education
+      fields = ['college', 'date_started', 'date_ended']
+
+
+class ResumeSerializer(serializers.ModelSerializer):
+    class Meta:
+      model = Resume
+      fields = ['full_name', 'profile_pic', 'resident', 'skills', 'job_des', 'language', 'expirience', 'education', 'gender']
 
   
 

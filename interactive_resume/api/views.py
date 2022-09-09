@@ -1,10 +1,11 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, EducationSerializer, ExprienceSerializer, ResumeSerializer
 from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.hashers import check_password
 import json
+from .models import Resume
 
 User = get_user_model()
 
@@ -49,9 +50,8 @@ def login_user(request):
 
             else:
                 if user.is_active:
-                    print(request.user)
-                
                     login(request, user)
+                    request.session['user_id'] = request.user.id
                     data["message"] = "user logged in"
                     data["username"] = user.username
 
@@ -64,3 +64,49 @@ def login_user(request):
 
         else:
             return Response({"400": f'Account doesnt exist'})
+
+
+
+@api_view(['GET'])
+def get_resume(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    resume = Resume.objects.get(user=user)
+    print(resume)
+    serializer = ResumeSerializer(resume, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def add_education(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    print(user)
+    serializer = EducationSerializer(data=request.data)
+    if serializer.is_valid():
+        # serializer.objects.user = user
+        serializer.save(user=user)
+        return Response(serializer.data)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def add_exprience(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    print(user)
+    serializer = ExprienceSerializer(data=request.data)
+    if serializer.is_valid():
+        # serializer.objects.user = user
+        serializer.save(user=user)
+        return Response(serializer.data)
+    return Response(serializer.data)
+
+
+# @api_view(['POST'])
+# def add_resume(request):
+
+
+
+
+

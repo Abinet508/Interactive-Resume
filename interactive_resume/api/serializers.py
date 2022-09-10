@@ -68,8 +68,6 @@ class EducationSerializer(serializers.ModelSerializer):
 
 class ResumeSerializer(serializers.ModelSerializer):
     gender = serializers.CharField(source='get_gender_display')
-    language = serializers.CharField(source='get_language_display')
-    profile_pic = serializers.ImageField()
     # gender = ChoiceField(choices=.Resume.gender_choices)
     # language = ChoiceField(choices=.Resume.language_choices)
     class Meta:

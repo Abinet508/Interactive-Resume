@@ -8,5 +8,5 @@ urlpatterns = [
    path('resume', views.get_resume, name='resume'),
    path('add_education', views.add_education, name='add_educatio'),
    path('add_exprience', views.add_exprience, name='add_exprience'),
-   path('add_resume', views.add_resume, name='add_resume'),
+   # path('add_resume', views.add_resume, name='add_resume'),
 ]

@@ -99,14 +99,6 @@ def get_exprience(request):
     serializer = ExprienceSerializer(exp, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def add_educ(request):
-    user_id = request.session['user_id']
-    user = User.objects.get(id=user_id)
-    resume = Resume.objects.get(user=user)
-    print(resume)
-
-    return Response(resume)
 
 
 @api_view(['POST'])

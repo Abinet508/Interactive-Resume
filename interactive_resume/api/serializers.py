@@ -77,7 +77,7 @@ class ExprienceSerializer(serializers.ModelSerializer):
 
 class EducationSerializer(serializers.ModelSerializer):
     resume = serializers.PrimaryKeyRelatedField(queryset=Resume.objects.all(),
-                                                  many=False) 
+                                                  many=False, required=False) 
     # resume = ResumeSerializer
     class Meta:
       model = Education

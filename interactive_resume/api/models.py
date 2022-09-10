@@ -18,30 +18,30 @@ class Resume(models.Model):
     gender = models.CharField(choices=gender_choice, max_length=200, blank=True)
 
     def __str__(self):
-        return f'{self.full_name}-Resume'
+        return f'{self.id}'
 
 
 class Exprience(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     job = models.CharField(max_length=500)
     date_started = models.DateField()
     date_ended = models.DateField()
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name='expriences', blank=True)
 
     def __str__(self):
-        return f'{self.user.username}-exprience'
+        return f'{self.resume}-exprience'
 
 
 
 class Education(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     college = models.CharField(max_length=500)
     date_started = models.DateField()
     date_ended = models.DateField()
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, related_name='educations', blank=True)
 
     def __str__(self):
-        return f'{self.user.username}-education'
+        return f'{self.resume}-education'
 
 
 

@@ -37,18 +37,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-
-class ExprienceSerializer(serializers.ModelSerializer):
-    class Meta:
-      model = Exprience
-      fields = ['job', 'date_started', 'date_ended']
-
-class EducationSerializer(serializers.ModelSerializer):
-    class Meta:
-      model = Education
-      fields = ['college', 'date_started', 'date_ended']
-
-
 # class ChoiceField(serializers.ChoiceField):
 
 #     def to_representation(self, obj):
@@ -67,12 +55,34 @@ class EducationSerializer(serializers.ModelSerializer):
 #         self.fail('invalid_choice', input=data)
 
 class ResumeSerializer(serializers.ModelSerializer):
-    gender = serializers.CharField(source='get_gender_display')
+    gender = serializers.CharField()
+    educations = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    expriences = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # educations = educationsSerializer()
+    # expriences = expriencesSerializer()
     # gender = ChoiceField(choices=.Resume.gender_choices)
     # language = ChoiceField(choices=.Resume.language_choices)
     class Meta:
       model = Resume
-      fields = ['full_name', 'profile_pic', 'resident', 'skills', 'job_des', 'language', 'gender']
+      fields = ['full_name', 'profile_pic', 'resident', 'skills', 'job_des', 'language', 'gender', 'educations', 'expriences']
+
+
+class ExprienceSerializer(serializers.ModelSerializer):
+    resume = serializers.PrimaryKeyRelatedField(queryset=Resume.objects.all(),
+                                                  many=False)  
+    # resume = ResumeSerializer()
+    class Meta:
+      model = Exprience
+      fields = ['job', 'date_started', 'date_ended', 'resume']
+
+class EducationSerializer(serializers.ModelSerializer):
+    resume = serializers.PrimaryKeyRelatedField(queryset=Resume.objects.all(),
+                                                  many=False) 
+    # resume = ResumeSerializer
+    class Meta:
+      model = Education
+      fields = ['college', 'date_started', 'date_ended', 'resume']
+      
 
   
 

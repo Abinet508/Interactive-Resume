@@ -77,18 +77,49 @@ def get_resume(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def get_education(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    resume = Resume.objects.get(user=user)
+    edu = Education.objects.filter(resume=resume)
+    # print(print(resume.id))
+    serializer = EducationSerializer(edu, many=True)
+    return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+def get_exprience(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    resume = Resume.objects.get(user=user)
+    exp = Exprience.objects.filter(resume=resume)
+    print(exp)
+    serializer = ExprienceSerializer(exp, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def add_educ(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    resume = Resume.objects.get(user=user)
+    print(resume)
+
+    return Response(resume)
+
+
 @api_view(['POST'])
 def add_education(request):
     user_id = request.session['user_id']
     user = User.objects.get(id=user_id)
     resume = Resume.objects.get(user=user)
-    print(user)
     serializer = EducationSerializer(data=request.data, many=True)
     if serializer.is_valid():
         # serializer.objects.user = user
-        serializer.save(user=user, resume=resume)
+        serializer.save(resume=resume)
         return Response(serializer.data)
-    return Response(serializer.data)
+    return Response(serializer.errors)
 
 
 @api_view(['POST'])
@@ -96,21 +127,21 @@ def add_exprience(request):
     user_id = request.session['user_id']
     user = User.objects.get(id=user_id)
     resume = Resume.objects.get(user=user)
-    print(user)
     serializer = ExprienceSerializer(data=request.data, many=True)
     if serializer.is_valid():
         # serializer.objects.user = user
-        serializer.save(user=user, resume=resume)
+        serializer.save(resume=resume)
         return Response(serializer.data)
-    return Response(serializer.data)
+    return Response(serializer.errors)
 
 
-# @api_view(['POST'])
-# def add_resume(request):
-#     user_id = request.session['user_id']
-#     user = User.objects.get(id=user_id)
-#     exprience = Exprience.objects.filter(user=user)
-#     education = Education.objects.filter(user=user)
-#     serializer = ResumeSerializer(data=request.data)
-#     if serializer.is_valid():
-#         serializer.save(exprience=exprience, education=education)
+@api_view(['PUT'])
+def add_resume(request):
+    user_id = request.session['user_id']
+    user = User.objects.get(id=user_id)
+    resume = Resume.objects.get(user=user)
+    serializer = ResumeSerializer(instance=resume, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors)

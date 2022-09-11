@@ -15,7 +15,13 @@ User = get_user_model()
 def home(request):
     route = {
         "Register": "/api/register",
-        "Login": "api/login"
+        "Login": "api/login",
+        "get_resume": "api/resume",
+        "get_education": "api/education",
+        "get_exprience": "api/exprience",
+        "add_resume": "api/add_resume",
+        "add_education": "api/add_education",
+        "add_exprience": "api/add_exprience"
     }
 
     return Response(route)
